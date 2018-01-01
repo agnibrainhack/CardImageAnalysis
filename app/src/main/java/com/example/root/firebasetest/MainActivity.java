@@ -3,6 +3,7 @@ package com.example.root.firebasetest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -180,6 +181,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     FriendlyMessage friendlyMessage = dataSnapshot.getValue(FriendlyMessage.class);
                     mMessageAdapter.add(friendlyMessage);
+                    mMessageListView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mMessageListView.setSelection(mMessageAdapter.getCount() - 1);
+                        }
+                    });
                 }
 
                 @Override
